@@ -1,37 +1,49 @@
-## Welcome to GitHub Pages
+## Description
+This repository matains the **Java implementation** of QoS-centric service recommendation on the incomplete QoS dataset.
 
-You can use the [editor on GitHub](https://github.com/zelax-bot/IQSRec/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+You can read more information about the algorithm from our publication:
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+1. Yanjun Shu,  Jianhang Zhang, Wei Emma Zhang, Decheng Zuo, and Quan Z. Sheng. "Dimension-based Partition for Skyline Service Recommendation on Incomplete QoS", manuscript. 
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Dependencies
 
-```markdown
-Syntax highlighted code block
+* Java 1.8 (<https://www.oracle.com/>)
 
-# Header 1
-## Header 2
-### Header 3
+## Usage
 
-- Bulleted
-- List
+ The library implements MSPC and IQSRec algorithms for incomplete datasets, and SFS algorithm for complete datasets. 
 
-1. Numbered
-2. List
+### Setp 1. Create the corresponding class
+   
+* Complete datasets algorithm
+  * SFS : ` SortedFilterSkyline cs = new SortedFilterSkyline();`
+* Incomplete datasets algorithm
+  * Native : `Native nativeSky = new NativeSkyline();`
+  * MSPC : `MSPC mspc = new MSPC();`
+  * PSkyline : `IQSRec iqsrec = new IQSRec();`
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+### Step 2. Init data (option)
+There are two ways to init data:
+1. Read data, then init 
 ```
+float[][] data = new FileHandler().readFile(filePath, withHead);
+PSkyline mspc = new MPSC();
+mspc.initData(data);
+```
+2. Call the readFile function
+```
+MSPC mspc = new MSPC();
+mspc.readFile(filePath, false);
+```
+### Setp 3. Execute query algorithm
+* Complete 
+  * SFS : `cs.getSkyline(data);`
+* Incomplete 
+  * Native : `nativeSky.getSkyline(topK);`
+  * MSPC : `mspc.getSkyline(topK);`
+  * IQSrec: `iqsrec.getSkyline(m, method);`
+  
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/zelax-bot/IQSRec/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## FeedBack
+If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/IntervalSkylineFinalTmp/issues). Also for any enquire, you can drop an e-mail to us (<jh.zhang98@qq.com>).
