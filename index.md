@@ -1,4 +1,4 @@
-## Description
+## Welcome to IQSRec Pages
 This repository matains the **Java implementation** of QoS-centric service recommendation on the incomplete QoS dataset.
 
 You can read more information about the algorithm from our publication:
