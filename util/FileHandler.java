@@ -39,8 +39,12 @@ public class FileHandler {
     public float[][] readFile(String filePath, boolean withHead) {
         if (withHead)
             return readFileWithHead(filePath);
-        List<float[]> data = new ArrayList<>();
         File file = new File(filePath);
+        return readFile(file);
+    }
+
+    public float[][] readFile(File file) {
+        List<float[]> data = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line = br.readLine();
