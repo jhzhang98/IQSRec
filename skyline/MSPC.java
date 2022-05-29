@@ -1,12 +1,11 @@
 package skyline;
 
 import element.Point;
-import util.Evaluator;
 
 import java.util.Arrays;
 
 
-public class MSPC extends PSkyline {
+public class MSPC extends Sky {
 
     private float[][] smallerMatrix;
     private float[][] biggerMatrix;

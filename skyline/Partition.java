@@ -21,7 +21,7 @@ public class Partition {
 
         attrList.sort(Float::compare);
 
-        if (attrList.get(0) == -1)
+        if (attrList.get(0) < 0)
             score.put(-1f, 0f);
 
         // because of bigger is better, the later the attr, the higher the score

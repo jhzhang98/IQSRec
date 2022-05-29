@@ -12,54 +12,32 @@ You can read more information about the algorithm from our publication:
 
 ## Usage
 
-  We provide two ways to use IQSRec: (1) use java instance (2) gui read file
+  We provide two ways to use IQSRec: (1) use java instance (2) gui tool
 
 ### Instance
 
- The library implements MSPC and IQSRec algorithms for incomplete datasets, and SFS algorithm for complete datasets. 
- You can also see the usage in `USageDemo.java`. 
-
-#### Setp 1. Create the corresponding class
-   
-* Complete datasets algorithm
-  * SFS : ` SortedFilterSkyline cs = new SortedFilterSkyline();`
-* Incomplete datasets algorithm
-  * Native : `Native nativeSky = new NativeSkyline();`
-  * MSPC : `MSPC mspc = new MSPC();`
-  * PSkyline : `IQSRec iqsrec = new IQSRec();`
-
-#### Step 2. Init data (option)
-There are two ways to init data:
-1. Read data, then init 
-```
-float[][] data = new FileHandler().readFile(filePath, withHead);
-PSkyline mspc = new MPSC();
-mspc.initData(data);
-```
-2. Call the readFile function
-```
-MSPC mspc = new MSPC();
-mspc.readFile(filePath, false);
-```
-#### Setp 3. Execute query algorithm
-* Complete 
-  * SFS : `cs.getSkyline(data);`
-* Incomplete 
-  * Native : `nativeSky.getSkyline(topK);`
-  * MSPC : `mspc.getSkyline(topK);`
-  * IQSrec: `iqsrec.getSkyline(m, method);`
+ The library implements MSPC and IQSRec algorithms for incomplete datasets. You can get the usage in `USageDemo.java`.
   
 ### GUI Demo
 
-run `Main.java`
+run `GUIStart.java`
 
-#### Step 1. Read Complete Dataset
-![Complete](data/step1.jpg)
-#### Step 2. Read Incomplete Dataset
-![Incomplete](data/step2.jpg)
-#### Step 3. Result
-We'll output the precision of IQSRec on the console.
+#### Step 1. Read Origin Dataset
+![Read File](fig/read_data.jpg)
 
+Be attention, the format of input should be like in the 'data/qws_rate_0.2.txt' (separated by space or ',')
+#### Step 2. Select Data
+In this step, you can select the dimensions and services you're interested. 
+
+![Select](fig/select_data.jpg)
+#### Step 3. Normalize Data
+By default, all QoS attributes that larger is better. So we need to know which attributes are smaller is better.
+As the figure shown, "Response Time" and "Latency" should be selected.
+![Norm](fig/normalize_data.jpg)
+
+#### Step 4. Run
+Click "Run", you can get the result.
+![Run](fig/run.jpg)
 ## FeedBack
-If you find any bugs or errors, please post to our [issue page](https://github.com/jhzhang98/IntervalSkylineFinalTmp/issues). Also for any enquire, you can drop an e-mail to us (<jh.zhang98@qq.com>).
+If you find any bugs or errors, please post to our issue page. Also for any enquire, you can drop an e-mail to us (<jh.zhang98@qq.com>).
 

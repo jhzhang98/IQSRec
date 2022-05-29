@@ -4,7 +4,7 @@ import util.FileHandler;
 
 import java.util.*;
 
-public class PSkyline {
+public class Sky {
     protected float[][] data = null;
     protected int row, col;
     protected List<Map<Float, Float>> bigger = new ArrayList<>();
@@ -31,7 +31,7 @@ public class PSkyline {
      *                 false: service * attr
      */
     public void readFile(String filePath, boolean withHead) {
-        data = new FileHandler().readFile(filePath, withHead);
+        data = FileHandler.readFile(filePath, withHead);
         row = data.length;
         col = data[0].length;
         probMedian = new float[col];
@@ -44,7 +44,7 @@ public class PSkyline {
     /***
      * find the duplicate value of data, return num of duplicate value
      */
-    private int uniqueAttrNum(float[] data) {
+    protected int uniqueAttrNum(float[] data) {
         Set<Float> set = new HashSet<>();
         for (float value : data) {
             if (value < 0)
@@ -109,12 +109,16 @@ public class PSkyline {
      * @return the selected attribute
      */
     protected float[] getAttr(int index) {
-        float[] attr = new float[row];
-        for (int i = 0; i < row; i++)
-            attr[i] = data[i][index];
-        return attr;
+        return getAttr(this.data, index);
     }
 
+    protected float[] getAttr(float[][] data, int index) {
+        float[] attr = new float[data.length];
+        for (int i=0 ; i<data.length ; i++){
+            attr[i] = data[i][index];
+        }
+        return attr;
+    }
     /***
      * select parts of the data
      * @param data all data

@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class FileHandler {
-    private float[][] readFileWithHead(String filePath) {
+    private static float[][] readFileWithHead(String filePath) {
         File file = new File(filePath);
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -36,14 +36,14 @@ public class FileHandler {
      * @param withHead if true -> first line must be: 'rowNum,colNum' or 'rowNum colNum'
      * @return default is float[][]
      */
-    public float[][] readFile(String filePath, boolean withHead) {
+    public static float[][] readFile(String filePath, boolean withHead) {
         if (withHead)
             return readFileWithHead(filePath);
         File file = new File(filePath);
         return readFile(file);
     }
 
-    public float[][] readFile(File file) {
+    public static  float[][] readFile(File file) {
         List<float[]> data = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -77,7 +77,7 @@ public class FileHandler {
     }
 
 
-    public <E> void saveFile(E[][] data, String path, boolean writeHead) {
+    public static <E> void saveFile(E[][] data, String path, boolean writeHead) {
         String delimiter = " ";
         try {
             File file = new File(path);
@@ -98,16 +98,28 @@ public class FileHandler {
         }
     }
 
+    public static String[] readAttribute(File file) {
+        List<String> res = new ArrayList<>();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            String line = br.readLine();
+            while (null != line) {
+                String[] parts = line.split(",");
+                for (String part : parts) {
+                    res.add(part.trim());
+                }
+                line = br.readLine();
+            }
+            String[] attributes = new String[res.size()];
+            return res.toArray(attributes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
-        /*
-        FileHandler handler = new FileHandler();
-        float[][] dataNoHead = handler.readFile("file\\qws_normal_headless.txt", false);
-        float[][] dataWithHead = handler.readFile("file\\qws_normal.txt", true);
-        for (int i = 0; i < dataNoHead.length; i++)
-            for (int j = 0; j < dataNoHead[0].length; j++)
-                if (dataNoHead[i][j] != dataWithHead[i][j])
-                    System.out.println(i + ", " + j + "not equal!");
-         */
+
     }
 
 }

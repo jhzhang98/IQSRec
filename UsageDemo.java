@@ -1,47 +1,69 @@
 import skyline.IQSRec;
-import skyline.MSPC;
-import skyline.Native;
 import skyline.SortedFilterSkyline;
+import util.DataHandler;
 import util.Evaluator;
 import util.FileHandler;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class UsageDemo {
+
     public static void main(String[] args) {
-        String path = "data/qws_normal.txt";
-        float[][] data = new FileHandler().readFile(path, false);
+        // rec service number = m * d
+        int m = 3;
+        // method 0: choose top candidateNum after sorting in descending, when dataset is large and m is small, it can be close to true point
+        //        1: choose top candidateNum after calculating probability and sorting in descending, more accurate
+        // default method = 0
+        int method = 0;
 
-        String sparsePath = "data/qws_m_rate_0.2_time_0.txt";
-        float[][] dataSparse = new FileHandler().readFile(sparsePath, false);
+        // Step 1. Read Origin File
+        float[][] dataOrigin = FileHandler.readFile("data/qws_rate_0.2.txt", false);
+        int n = dataOrigin.length, d = dataOrigin[0].length;
 
-        int[] skylineRight = new SortedFilterSkyline().getSkyline(data);
+        // Step 2. Normalization
+        boolean[] smallerBetter = new boolean[d];
+        smallerBetter[0] = true;
+        smallerBetter[8] = true;
+        float[][] dataOriginNorm = DataHandler.dataNormalized(dataOrigin, smallerBetter);
 
-        // rec size = m * d
-        int m = 5;
-
-        Evaluator ev = new Evaluator();
-
-        long start = System.currentTimeMillis();
-        Native nat = new Native();
-        nat.initData(dataSparse);
-        int[] skylineNative = nat.getSkyline(data[0].length * m);
-        long end = System.currentTimeMillis();
-        System.out.println("native precision: " + ev.precision(skylineRight, skylineNative));
-        System.out.println("native cost: " + (end - start) / 1000.0 + "s");
-
-        start = System.currentTimeMillis();
-        MSPC mspc = new MSPC();
-        mspc.initData(dataSparse);
-        int[] skylineMSPC = mspc.getSkyline(data[0].length * m);
-        end = System.currentTimeMillis();
-        System.out.println("mspc precision: " + ev.precision(skylineRight, skylineMSPC));
-        System.out.println("mspc cost: " + (end - start) / 1000.0 + "s");
-
-        start = System.currentTimeMillis();
+        // Step 3. Get Skyline
         IQSRec iqsRec = new IQSRec();
-        iqsRec.initData(dataSparse);
-        int[] skylineIQSRec = iqsRec.getSkyline(m, 1);
-        end = System.currentTimeMillis();
-        System.out.println("iqsrec precision: " + ev.precision(skylineRight, skylineIQSRec));
-        System.out.println("iqsrec cost: " + (end - start) / 1000.0 + "s");
+        iqsRec.initData(dataOriginNorm);
+        int[] skylineOrigin = iqsRec.getSkyline(m, method);
+        tablePrint(dataOrigin, skylineOrigin);
+
+        // Or you maybe want to slice this data
+        // We prove a slice method: DataHandler.dataSlice(data, start, end, dimension)
+
+        // Step 1. Tell Us the QoS Selected
+        boolean[] dimensionSelected = new boolean[9];
+        dimensionSelected[0] = true;
+        dimensionSelected[1] = true;
+        dimensionSelected[3] = true;
+        dimensionSelected[6] = true;
+        dimensionSelected[7] = true;
+
+        int start = 1001, end = 2000;
+        float[][] dataSlice = DataHandler.dataSlice(dataOrigin, start, end, dimensionSelected);
+        // Step 2. Do Normalization
+        smallerBetter = new boolean[]{true, false, false, false, true};
+        float[][] dataSliceNorm = DataHandler.dataNormalized(dataSlice, smallerBetter);
+        iqsRec.initData(dataSliceNorm);
+        int[] skylineIQ2 = iqsRec.getSkyline(m, 0);
+        System.out.println("\n==================================================\n");
+        tablePrint(dataSlice, skylineIQ2);
+    }
+
+    private static void tablePrint(float[][] data, int[] indexes) {
+        for (int index : indexes) {
+            System.out.print((index + 1) + ": ");
+            for (int j = 0; j < data[0].length; j++) {
+                System.out.print(data[index][j] + "\t");
+            }
+            System.out.println();
+        }
     }
 }
