@@ -16,9 +16,9 @@ You can read more information about the algorithm from our publication:
 
 ### Instance
 
- The library implements MSPC and IQSRec algorithms for incomplete datasets. You can get the usage in `USageDemo.java`.
+ The library implements MSPC and IQSRec algorithms for incomplete datasets. You can get the usage in `UsageDemo.java`.
   
-### GUI Demo
+### GUI Start
 
 run `GUIStart.java`
 
@@ -39,5 +39,5 @@ As the figure shown, "Response Time" and "Latency" should be selected.
 Click "Run", you can get the result.
 ![Run](fig/run.jpg)
 ## FeedBack
-If you find any bugs or errors, please post to our issue page. Also for any enquire, you can drop an e-mail to us (<jh.zhang98@qq.com>).
+If you find any bugs or errors, please post to our issue page.
 

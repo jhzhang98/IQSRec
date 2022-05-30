@@ -1,13 +1,6 @@
 import skyline.IQSRec;
-import skyline.SortedFilterSkyline;
 import util.DataHandler;
-import util.Evaluator;
 import util.FileHandler;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class UsageDemo {
 
