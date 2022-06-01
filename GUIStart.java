@@ -102,7 +102,7 @@ public class GUIStart extends JFrame {
             e.printStackTrace();
         }
 
-        this.setTitle("ISkySel");
+        this.setTitle("IQSRec");
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setBounds(100, 100, 1500, 800);

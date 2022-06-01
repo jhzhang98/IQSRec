@@ -13,7 +13,7 @@ public class UsageDemo {
         int method = 0;
 
         // Step 1. Read Origin File
-        float[][] dataOrigin = FileHandler.readFile("data/qws_rate_0.2.txt", false);
+        float[][] dataOrigin = FileHandler.readFile("data/qws_incomplete.txt", false);
         int n = dataOrigin.length, d = dataOrigin[0].length;
 
         // Step 2. Normalization
