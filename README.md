@@ -3,7 +3,7 @@ This repository matains the **Java implementation** of QoS-centric service recom
 
 You can read more information about the algorithm from our publication:
 
-1. Yanjun Shu,  Jianhang Zhang, Wei Emma Zhang, Decheng Zuo, and Quan Z. Sheng. "IQSrec: An Efficient and Diversified Skyline Services Recommendation on Incomplete QoS", manuscript. 
+1. Yanjun Shu,  Jianhang Zhang, Wei Emma Zhang, Decheng Zuo, and Quan Z. Sheng. "IQSrec: An Efficient and Diversified Skyline Services Recommendation on Incomplete QoS", manuscript for TSC. 
 
 
 ## Dependencies
